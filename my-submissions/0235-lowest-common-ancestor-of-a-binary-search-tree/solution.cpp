@@ -13,8 +13,7 @@ public:
     TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
         
         while (root) {
-            
-            // both nodes in left subtree
+
             if (p->val < root->val && q->val < root->val) {
                 root = root->left;
             }
