@@ -1,10 +1,8 @@
 class MedianFinder {
 public:
 
-    // max heap
     priority_queue<int> leftHeap;
 
-    // min heap
     priority_queue<int, vector<int>, greater<int>> rightHeap;
 
     MedianFinder() {
@@ -13,10 +11,8 @@ public:
 
     void addNum(int num) {
 
-        // Step 1: push into max heap
         leftHeap.push(num);
 
-        // Step 2: balance order property
         rightHeap.push(leftHeap.top());
         leftHeap.pop();
 
