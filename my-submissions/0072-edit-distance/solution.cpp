@@ -1,29 +1,34 @@
 class Solution {
 public:
-    int minDistance(string word1, string word2) {
-        int m = word1.size();
-        int n = word2.size();
+    vector<vector<int>> dp;
 
-        vector<vector<int>> dp(m+1, vector<int>(n+1));
+    int editDis(string &x, string &y, int m, int n) {
 
-        // base cases
-        for (int i = 0; i <= m; i++) dp[i][0] = i; // delete all
-        for (int j = 0; j <= n; j++) dp[0][j] = j; // insert all
+        if (m == 0)
+            return n;
 
-        for (int i = 1; i <= m; i++) {
-            for (int j = 1; j <= n; j++) {
-                if (word1[i-1] == word2[j-1]) {
-                    dp[i][j] = dp[i-1][j-1];
-                } else {
-                    dp[i][j] = 1 + min({
-                        dp[i-1][j],     // delete
-                        dp[i][j-1],     // insert
-                        dp[i-1][j-1]    // replace
-                    });
-                }
-            }
+        if (n == 0)
+            return m;
+
+        if (dp[m][n] != -1)
+            return dp[m][n];
+
+        if (x[m - 1] == y[n - 1]) {
+            return dp[m][n] = editDis(x, y, m - 1, n - 1);
         }
 
-        return dp[m][n];
+        return dp[m][n] = 1 + min({
+            editDis(x, y, m, n - 1),     
+            editDis(x, y, m - 1, n),      
+            editDis(x, y, m - 1, n - 1)   
+        });
+    }
+
+    int minDistance(string word1, string word2) {
+
+        dp.assign(word1.size() + 1,
+                  vector<int>(word2.size() + 1, -1));
+
+        return editDis(word1, word2, word1.size(), word2.size());
     }
 };
