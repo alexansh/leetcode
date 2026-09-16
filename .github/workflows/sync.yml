@@ -1,13 +1,15 @@
 name: Sync LeetCode
 
 on:
-  workflow_dispatch: # Allows you to manually trigger the sync
+  workflow_dispatch:
   schedule:
-    - cron: '0 0 * * *' # Runs automatically every day at midnight UTC
+    - cron: '0 0 * * *'
 
 jobs:
   build:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write # <-- Added this line to grant write access
     steps:
       - name: Sync LeetCode Submissions
         uses: joshcai/leetcode-sync@v1.7
