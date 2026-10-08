@@ -18,15 +18,15 @@ public:
         ListNode* slow = &dummy;
 
         for(int i=0; i<n; i++){
-            fast= fast->next;
+            fast = fast->next;
         }
 
         while(fast->next != NULL){
-            fast = fast->next;
             slow = slow->next;
+            fast = fast->next;
         }
-
         slow->next = slow->next->next;
+
         return dummy.next;
     }
 };
